@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Multifuncional Premium com Som</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="calculator-container">
+        <header class="calc-header">
+            <h1>Calculadora Flex</h1>
+        </header>
+
+        <nav class="tabs-navigation">
+            <button class="tab-button active" data-tab="discount">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M21.41 11.58l-9-9A2 2 0 0011 2H4a2 2 0 00-2 2v7a2 2 0 00.59 1.42l9 9a2 2 0 002.82 0l7-7a2 2 0 000-2.84zM6.5 8A1.5 1.5 0 118 6.5 1.5 1.5 0 016.5 8z"/></svg>
+                Descontos
+            </button>
+            <button class="tab-button" data-tab="standard">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm0-4H7v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm4 4h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4H7V5h10v2z"></path></svg>
+                Padrão
+            </button>
+            <button class="tab-button" data-tab="percentage">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M7.5 10A2.5 2.5 0 005 7.5 2.5 2.5 0 007.5 5a2.5 2.5 0 000 5zm0-3.5A1 1 0 018.5 7H6.5a1 1 0 110-2h1a1 1 0 011 1zM19 13l-6 6-1.41-1.41L16.17 13H5v-2h11.17l-4.58-4.59L13 5l6 6zm-2.5-2.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm0 3.5a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                Porcentagens
+            </button>
+        </nav>
+
+        <div id="discountContent" class="tab-content active">
+            <div class="form-field">
+                <input type="number" id="originalPrice" placeholder=" " step="0.01" min="0.01">
+                <label for="originalPrice">Valor Original (R$)</label>
+            </div>
+            <div class="form-field">
+                <input type="number" id="discountPercentage" placeholder=" " step="0.1" min="0" max="100">
+                <label for="discountPercentage">Desconto (%)</label>
+                <span class="input-suffix">%</span>
+            </div>
+            <div id="discountErrorMessage" class="error-message-box"></div>
+            <button id="calculateDiscountBtn" class="calc-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M21.41 11.58l-9-9A2 2 0 0011 2H4a2 2 0 00-2 2v7a2 2 0 00.59 1.42l9 9a2 2 0 002.82 0l7-7a2 2 0 000-2.84zM6.5 8A1.5 1.5 0 118 6.5 1.5 1.5 0 016.5 8z"/></svg>
+                Calcular Desconto
+            </button>
+            <section id="discountResultsArea" class="results-area">
+                <h2>Resultado do Desconto:</h2>
+                <div class="result-line original-price-line">
+                    <span class="label">Valor Original:</span>
+                    <span class="value" id="displayOriginalPrice">R$ 0,00</span>
+                </div>
+                <div class="result-line saved-amount">
+                    <span class="label">Você Economizou:</span>
+                    <span class="value">
+                        <span id="displayAmountSaved">R$ 0,00</span>
+                        <span id="displayPercentageSaved" class="percentage-saved">-0%</span>
+                    </span>
+                </div>
+                <div class="result-line final-total">
+                    <span class="label">Valor Final:</span>
+                    <span class="value" id="displayFinalPrice">R$ 0,00</span>
+                </div>
+            </section>
+            <button id="resetDiscountBtn" class="calc-button secondary">
+                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                Refazer Cálculo
+            </button>
+        </div>
+
+        <div id="standardContent" class="tab-content">
+            <div class="standard-calculator-display-wrapper">
+                <div id="standardCalculatorHistory"></div>
+                <div id="standardCalculatorDisplay">0</div>
+            </div>
+            <div class="standard-calculator-buttons">
+                <button class="all-clear" data-action="all-clear">AC</button>
+                <button class="clear" data-action="clear-entry">CE</button>
+                <button data-action="backspace" title="Apagar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.12C5.77 20.65 6.31 21 7 21h15a2 2 0 002-2V5a2 2 0 00-2-2zm-3.71 12.29a.9959.9959 0 01-1.41 0L14 12.41l-2.88 2.88a.9959.9959 0 01-1.41 0c-.39-.39-.39-1.02 0-1.41L12.59 11 9.71 8.12c-.39-.39-.39-1.02 0-1.41a.9959.9959 0 011.41 0L14 9.59l2.88-2.88a.9959.9959 0 011.41 0c.39.39.39 1.02 0 1.41L15.41 11l2.88 2.88c.39.39.38 1.03-.01 1.41z"/></svg>
+                </button>
+                <button class="operator" data-action="operator" data-value="/">÷</button>
+
+                <button data-action="number" data-value="7">7</button>
+                <button data-action="number" data-value="8">8</button>
+                <button data-action="number" data-value="9">9</button>
+                <button class="operator" data-action="operator" data-value="*">×</button>
+
+                <button data-action="number" data-value="4">4</button>
+                <button data-action="number" data-value="5">5</button>
+                <button data-action="number" data-value="6">6</button>
+                <button class="operator" data-action="operator" data-value="-">-</button>
+
+                <button data-action="number" data-value="1">1</button>
+                <button data-action="number" data-value="2">2</button>
+                <button data-action="number" data-value="3">3</button>
+                <button class="operator" data-action="operator" data-value="+">+</button>
+
+                <button class="wide" data-action="number" data-value="0">0</button>
+                <button data-action="decimal" data-value=".">.</button>
+                <button class="equals" data-action="calculate">=</button>
+            </div>
+        </div>
+
+        <div id="percentageContent" class="tab-content">
+             <div class="form-section">
+                <h3>Calcular Aumento Percentual</h3>
+                <div class="form-field">
+                    <input type="number" id="baseValueIncrease" placeholder=" " step="0.01" min="0">
+                    <label for="baseValueIncrease">Valor Base (R$)</label>
+                </div>
+                <div class="form-field">
+                    <input type="number" id="percentageIncrease" placeholder=" " step="0.1" min="0">
+                    <label for="percentageIncrease">Aumento (%)</label>
+                    <span class="input-suffix">%</span>
+                </div>
+                <div id="increaseErrorMessage" class="error-message-box"></div>
+                <button id="calculateIncreaseBtn" class="calc-button">Calcular Aumento</button>
+                <section id="increaseResultsArea" class="results-area" style="margin-top: 20px;">
+                    <div class="result-line">
+                        <span class="label">Valor do Aumento:</span>
+                        <span class="value" id="displayIncreaseAmount">R$ 0,00</span>
+                    </div>
+                    <div class="result-line final-total">
+                        <span class="label">Total com Aumento:</span>
+                        <span class="value" id="displayTotalWithIncrease">R$ 0,00</span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="form-section">
+                <h3>Descobrir Preço Original (após desconto)</h3>
+                <div class="form-field">
+                    <input type="number" id="paidPrice" placeholder=" " step="0.01" min="0">
+                    <label for="paidPrice">Preço Pago (R$)</label>
+                </div>
+                <div class="form-field">
+                    <input type="number" id="discountApplied" placeholder=" " step="0.1" min="0" max="99.9">
+                    <label for="discountApplied">Desconto Aplicado (%)</label>
+                    <span class="input-suffix">%</span>
+                </div>
+                <div id="reversePriceErrorMessage" class="error-message-box"></div>
+                <button id="calculateOriginalPriceBtn" class="calc-button">Descobrir Original</button>
+                <section id="originalPriceResultsArea" class="results-area" style="margin-top: 20px;">
+                     <div class="result-line final-total">
+                        <span class="label">Preço Original Estimado:</span>
+                        <span class="value" id="displayCalculatedOriginalPrice">R$ 0,00</span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="form-section">
+                <h3>Descobrir Percentual de Desconto</h3>
+                <div class="form-field">
+                    <input type="number" id="actualOriginalPrice" placeholder=" " step="0.01" min="0">
+                    <label for="actualOriginalPrice">Preço Original (R$)</label>
+                </div>
+                <div class="form-field">
+                    <input type="number" id="pricePaidWithUnknownDiscount" placeholder=" " step="0.01" min="0">
+                    <label for="pricePaidWithUnknownDiscount">Preço Pago (R$)</label>
+                </div>
+                 <div id="findPercentageErrorMessage" class="error-message-box"></div>
+                <button id="calculateFindPercentageBtn" class="calc-button">Descobrir Percentual</button>
+                <section id="findPercentageResultsArea" class="results-area" style="margin-top: 20px;">
+                     <div class="result-line">
+                        <span class="label">Valor Economizado:</span>
+                        <span class="value" id="displayFoundSavedAmount">R$ 0,00</span>
+                    </div>
+                    <div class="result-line final-total">
+                        <span class="label">Desconto Aplicado:</span>
+                        <span class="value" id="displayCalculatedDiscountPercentage">0%</span>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
